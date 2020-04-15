@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import ru.netology.domain.Ticket;
 import ru.netology.repository.Repository;
 
+import java.util.Comparator;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -43,6 +45,10 @@ public class Manager {
 
     public Ticket findByFromTo(String from, String to) {
         return repository.findByFromTo(from, to);
+    }
+
+    public Ticket findByFromToComparator(String from, String to, Comparator<Ticket> comparator) {
+        return repository.findByFromToComparator(from, to, comparator);
     }
 
 }

@@ -2,6 +2,8 @@ package ru.netology.repository;
 
 import ru.netology.domain.Ticket;
 
+import java.util.Comparator;
+
 public class Repository {
 
     private Ticket[] tickets = new Ticket[0];
@@ -20,6 +22,15 @@ public class Repository {
     }
 
     public Ticket findByFromTo(String from, String to) {
+        for (Ticket ticket : tickets) {
+            if (ticket.getFrom() == from & ticket.getTo() == to) {
+                return ticket;
+            }
+        }
+        return null;
+    }
+
+    public Ticket findByFromToComparator(String from, String to, Comparator<Ticket> comparator) {
         for (Ticket ticket : tickets) {
             if (ticket.getFrom() == from & ticket.getTo() == to) {
                 return ticket;

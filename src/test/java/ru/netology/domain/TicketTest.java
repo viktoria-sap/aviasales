@@ -6,6 +6,7 @@ import ru.netology.manager.Manager;
 import ru.netology.repository.Repository;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,6 +14,7 @@ class TicketTest {
 
     private Repository repository = new Repository();
     private Manager manager = new Manager(repository);
+    private Comparator<Ticket> comparator = new Comparator<>(comparator);
 
     private Ticket first = new Ticket(1, 3500, "LED", "SVO", 120);
     private Ticket second = new Ticket(2, 3000, "LED", "SVO", 300);
@@ -78,6 +80,20 @@ class TicketTest {
         Arrays.sort(actual);
 
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindByFromToComparator() {
+        String from = "LED";
+        String to = "SVO";
+
+        manager.findByFromToComparator(from, to, comparator);
+        Ticket[] expected = new Ticket[]{second, first};
+        Ticket[] result = new Ticket[]{first, second};
+
+        Arrays.sort(result, comparator);
+
+        assertArrayEquals(expected, result);
     }
 
     @Test
