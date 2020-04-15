@@ -16,8 +16,8 @@ class TicketTest {
 
     private Ticket first = new Ticket(1, 3500, "LED", "SVO", 120);
     private Ticket second = new Ticket(2, 3000, "LED", "SVO", 300);
-    private Ticket third = new Ticket(3, 5000,  "VOG", "VKO", 150);
-    private Ticket fourth = new Ticket(4, 4500,  "GOJ", "IST", 210);
+    private Ticket third = new Ticket(3, 5000, "VOG", "VKO", 150);
+    private Ticket fourth = new Ticket(4, 4500, "GOJ", "IST", 210);
 
     @BeforeEach
     public void setUp() {
