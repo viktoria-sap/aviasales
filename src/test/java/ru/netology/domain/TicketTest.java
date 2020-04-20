@@ -2,24 +2,23 @@ package ru.netology.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ru.netology.manager.Manager;
-import ru.netology.repository.Repository;
+import ru.netology.manager.SuggestionManager;
+import ru.netology.repository.SuggestionRepository;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TicketTest {
 
-    private Repository repository = new Repository();
-    private Manager manager = new Manager(repository);
-    private Comparator<Ticket> comparator = new Comparator<>(comparator);
+    private SuggestionRepository repository = new SuggestionRepository();
+    private SuggestionManager manager = new SuggestionManager(repository);
+    private Comparator<Suggestion> comparator = new Comparator<>(comparator);
 
-    private Ticket first = new Ticket(1, 3500, "LED", "SVO", 120);
-    private Ticket second = new Ticket(2, 3000, "LED", "SVO", 300);
-    private Ticket third = new Ticket(3, 5000, "VOG", "VKO", 150);
-    private Ticket fourth = new Ticket(4, 4500, "GOJ", "IST", 210);
+    private Suggestion first = new Suggestion(1, 3500, "LED", "SVO", 120);
+    private Suggestion second = new Suggestion(2, 3000, "LED", "SVO", 300);
+    private Suggestion third = new Suggestion(3, 5000, "VOG", "VKO", 150);
+    private Suggestion fourth = new Suggestion(4, 4500, "GOJ", "IST", 210);
 
     @BeforeEach
     public void setUp() {
@@ -32,8 +31,8 @@ class TicketTest {
 
     @Test
     public void shouldSortById() {
-        Ticket[] expected = new Ticket[]{second, first, fourth, third};
-        Ticket[] actual = new Ticket[]{first, second, third, fourth};
+        Suggestion[] expected = new Suggestion[]{second, first, fourth, third};
+        Suggestion[] actual = repository.findAll();
 
         Arrays.sort(actual);
 
@@ -44,26 +43,17 @@ class TicketTest {
     public void shouldRemoveIfExists() {
         int idToRemove = 1;
         manager.removeById(idToRemove);
-        Ticket[] actual = repository.getAll();
-        Ticket[] expected = new Ticket[]{fourth, third, second};
+        Suggestion[] actual = repository.findAll();
+        Suggestion[] expected = new Suggestion[]{second, third, fourth};
         assertArrayEquals(expected, actual);
     }
-//
-//    @Test
-//    public void shouldNotRemoveIfNotExists() {
-//        int idToRemove = 4;
-//        repository.removeById(idToRemove);
-//        Film[] actual = repository.getAll();
-//        Film[] expected = new Film[]{third, second, first};
-//        assertArrayEquals(expected, actual);
-//    }
 
     @Test
     public void shouldRemoveAll() {
 
         manager.removeAll();
-        Ticket[] actual = repository.getAll();
-        Ticket[] expected = new Ticket[]{};
+        Suggestion[] actual = repository.findAll();
+        Suggestion[] expected = new Suggestion[]{};
         assertArrayEquals(expected, actual);
 
     }
@@ -74,8 +64,8 @@ class TicketTest {
         String to = "SVO";
 
         manager.findByFromTo(from, to);
-        Ticket[] expected = new Ticket[]{second, first};
-        Ticket[] actual = new Ticket[]{first, second};
+        Suggestion[] expected = new Suggestion[]{second, first};
+        Suggestion[] actual = repository.findAll();
 
         Arrays.sort(actual);
 
@@ -88,8 +78,8 @@ class TicketTest {
         String to = "SVO";
 
         manager.findByFromToComparator(from, to, comparator);
-        Ticket[] expected = new Ticket[]{second, first};
-        Ticket[] result = new Ticket[]{first, second};
+        Suggestion[] expected = new Suggestion[]{second, first};
+        Suggestion[] result = new Suggestion[]{first, second};
 
         Arrays.sort(result, comparator);
 
@@ -97,13 +87,14 @@ class TicketTest {
     }
 
     @Test
-    public void shouldFindByIdNonExists() {
+    public void shouldFindByIdIfNotExists() {
         String from = "LED";
         String to = "VOG";
 
-        Ticket expected = null;
-        Ticket actual = manager.findByFromTo(from, to);
-        assertEquals(expected, actual);
+        manager.findByFromTo(from, to);
+        Suggestion[] expected = new Suggestion[]{};
+        Suggestion[] actual = repository.findAll();
+        assertArrayEquals(expected, actual);
     }
 
 }
