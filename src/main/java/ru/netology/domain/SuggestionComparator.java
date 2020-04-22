@@ -17,6 +17,6 @@ public class SuggestionComparator implements Comparator<Suggestion> {
     private int time;
 
     public int compare(Suggestion o1, Suggestion o2) {
-        return o1.getPrice() - o2.getPrice();
+        return o1.getTime() - o2.getTime();
     }
 }

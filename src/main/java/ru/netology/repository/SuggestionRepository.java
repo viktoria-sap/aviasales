@@ -21,27 +21,6 @@ public class SuggestionRepository {
         return tickets;
     }
 
-    public void findByFromTo(String from, String to) {
-        Suggestion[] tmp = new Suggestion[0];
-        int index = 0;
-        for (Suggestion ticket : tickets) {
-            if (ticket.getFrom().equals(from) & ticket.getTo().equals(to)) {
-                tmp[index] = ticket;
-                index++;
-            }
-        }
-        tickets = tmp;
-    }
-
-    public Suggestion findByFromToComparator(String from, String to, Comparator<Suggestion> comparator) {
-        for (Suggestion ticket : tickets) {
-            if (ticket.getFrom().equals(from) & ticket.getTo().equals(to)) {
-                return ticket;
-            }
-        }
-        return null;
-    }
-
     public void removeAll() {
         tickets = new Suggestion[]{};
     }

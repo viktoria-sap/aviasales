@@ -13,10 +13,10 @@ class TicketTest {
 
     private SuggestionRepository repository = new SuggestionRepository();
     private SuggestionManager manager = new SuggestionManager(repository);
-    private Comparator<Suggestion> comparator = new Comparator<>(comparator);
+    private SuggestionComparator comparator = new SuggestionComparator();
 
-    private Suggestion first = new Suggestion(1, 3500, "LED", "SVO", 120);
-    private Suggestion second = new Suggestion(2, 3000, "LED", "SVO", 300);
+    private Suggestion first = new Suggestion(1, 3500, "LED", "SVO", 300);
+    private Suggestion second = new Suggestion(2, 3000, "LED", "SVO", 120);
     private Suggestion third = new Suggestion(3, 5000, "VOG", "VKO", 150);
     private Suggestion fourth = new Suggestion(4, 4500, "GOJ", "IST", 210);
 
@@ -27,16 +27,6 @@ class TicketTest {
         repository.save(third);
         repository.save(fourth);
 
-    }
-
-    @Test
-    public void shouldSortById() {
-        Suggestion[] expected = new Suggestion[]{second, first, fourth, third};
-        Suggestion[] actual = repository.findAll();
-
-        Arrays.sort(actual);
-
-        assertArrayEquals(expected, actual);
     }
 
     @Test
@@ -55,19 +45,12 @@ class TicketTest {
         Suggestion[] actual = repository.findAll();
         Suggestion[] expected = new Suggestion[]{};
         assertArrayEquals(expected, actual);
-
     }
 
     @Test
     public void shouldFindByFromTo() {
-        String from = "LED";
-        String to = "SVO";
-
-        manager.findByFromTo(from, to);
         Suggestion[] expected = new Suggestion[]{second, first};
-        Suggestion[] actual = repository.findAll();
-
-        Arrays.sort(actual);
+        Suggestion[] actual = manager.findByFromTo("LED", "SVO");
 
         assertArrayEquals(expected, actual);
     }
@@ -77,11 +60,8 @@ class TicketTest {
         String from = "LED";
         String to = "SVO";
 
-        manager.findByFromToComparator(from, to, comparator);
         Suggestion[] expected = new Suggestion[]{second, first};
-        Suggestion[] result = new Suggestion[]{first, second};
-
-        Arrays.sort(result, comparator);
+        Suggestion[] result = manager.findByFromToComparator(from, to, comparator);
 
         assertArrayEquals(expected, result);
     }
@@ -89,11 +69,10 @@ class TicketTest {
     @Test
     public void shouldFindByIdIfNotExists() {
         String from = "LED";
-        String to = "VOG";
+        String to = "SVO";
 
-        manager.findByFromTo(from, to);
         Suggestion[] expected = new Suggestion[]{};
-        Suggestion[] actual = repository.findAll();
+        Suggestion[] actual = manager.findByFromTo(from, to);
         assertArrayEquals(expected, actual);
     }
 
