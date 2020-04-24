@@ -69,7 +69,7 @@ class TicketTest {
     @Test
     public void shouldFindByIdIfNotExists() {
         String from = "LED";
-        String to = "SVO";
+        String to = "VOG";
 
         Suggestion[] expected = new Suggestion[]{};
         Suggestion[] actual = manager.findByFromTo(from, to);

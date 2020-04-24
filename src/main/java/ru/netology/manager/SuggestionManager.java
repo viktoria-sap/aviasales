@@ -22,7 +22,6 @@ public class SuggestionManager {
     }
 
     private Suggestion[] tickets = new Suggestion[0];
-    private SuggestionComparator[] ticketsComparator = new SuggestionComparator[0];
 
     public void add(Suggestion ticket) {
         repository.save(ticket);
@@ -36,34 +35,32 @@ public class SuggestionManager {
         repository.removeById(id);
     }
 
-    public void getAll() {
-        repository.findAll();
-    }
-
     public Suggestion[] findByFromTo(String from, String to) {
-        Suggestion[] tmp = new Suggestion[0];
-        int index = 0;
-        for (Suggestion ticket : tickets) {
+        Suggestion[] result = new Suggestion[0];
+        for (Suggestion ticket : repository.findAll()) {
             if (ticket.getFrom().equals(from) & ticket.getTo().equals(to)) {
-                tmp[index] = ticket;
-                index++;
+                Suggestion[] tmp = new Suggestion[result.length + 1];
+                System.arraycopy(result, 0, tmp, 0, result.length);
+                tmp[tmp.length - 1] = ticket;
+                result = tmp;
             }
         }
-        Arrays.sort(tmp);
-        return tmp;
+        Arrays.sort(result);
+        return result;
     }
 
-    public SuggestionComparator[] findByFromToComparator(String from, String to, Comparator<SuggestionComparator> comparator) {
-        SuggestionComparator[] tmp = new SuggestionComparator[0];
-        int index = 0;
-        for (SuggestionComparator ticket : ticketsComparator) {
+    public Suggestion[] findByFromToComparator(String from, String to, Comparator<Suggestion> comparator) {
+        Suggestion[] result = new Suggestion[0];
+        for (Suggestion ticket : repository.findAll()) {
             if (ticket.getFrom().equals(from) & ticket.getTo().equals(to)) {
-                tmp[index] = ticket;
-                index++;
+                Suggestion[] tmp = new Suggestion[result.length + 1];
+                System.arraycopy(result, 0, tmp, 0, result.length);
+                tmp[tmp.length - 1] = ticket;
+                result = tmp;
             }
         }
-        Arrays.sort(tmp, comparator);
-        return tmp;
+        Arrays.sort(result, comparator);
+        return result;
     }
 
 }
