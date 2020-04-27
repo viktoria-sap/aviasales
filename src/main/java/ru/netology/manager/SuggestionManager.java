@@ -27,6 +27,10 @@ public class SuggestionManager {
         repository.save(ticket);
     }
 
+    public Suggestion[] getAll() {
+        return repository.findAll();
+    }
+
     public void removeAll() {
         repository.removeAll();
     }
@@ -37,7 +41,7 @@ public class SuggestionManager {
 
     public Suggestion[] findByFromTo(String from, String to) {
         Suggestion[] result = new Suggestion[0];
-        for (Suggestion ticket : repository.findAll()) {
+        for (Suggestion ticket : getAll()) {
             if (ticket.getFrom().equals(from) & ticket.getTo().equals(to)) {
                 Suggestion[] tmp = new Suggestion[result.length + 1];
                 System.arraycopy(result, 0, tmp, 0, result.length);
@@ -51,7 +55,7 @@ public class SuggestionManager {
 
     public Suggestion[] findByFromToComparator(String from, String to, Comparator<Suggestion> comparator) {
         Suggestion[] result = new Suggestion[0];
-        for (Suggestion ticket : repository.findAll()) {
+        for (Suggestion ticket : getAll()) {
             if (ticket.getFrom().equals(from) & ticket.getTo().equals(to)) {
                 Suggestion[] tmp = new Suggestion[result.length + 1];
                 System.arraycopy(result, 0, tmp, 0, result.length);

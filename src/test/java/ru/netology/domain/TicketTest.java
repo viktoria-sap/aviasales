@@ -33,7 +33,7 @@ class TicketTest {
     public void shouldRemoveIfExists() {
         int idToRemove = 1;
         manager.removeById(idToRemove);
-        Suggestion[] actual = repository.findAll();
+        Suggestion[] actual = manager.getAll();
         Suggestion[] expected = new Suggestion[]{second, third, fourth};
         assertArrayEquals(expected, actual);
     }
@@ -42,7 +42,7 @@ class TicketTest {
     public void shouldRemoveAll() {
 
         manager.removeAll();
-        Suggestion[] actual = repository.findAll();
+        Suggestion[] actual = manager.getAll();
         Suggestion[] expected = new Suggestion[]{};
         assertArrayEquals(expected, actual);
     }
